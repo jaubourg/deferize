@@ -24,7 +24,9 @@ var fs = require( "fs" );
 var open = deferize( fs.open );
 ```
 
-What you get is a new function that does not require a callback anymore and returns a promise. You'd use our specific example as follows:
+What you get is a new function that is no longer callback-based but returns a promise instead.
+
+For instance, you'd use the previous example as follows:
 
 ```javascript
 open( "path/to/my/file", "r" ).done( function( fd ) {
