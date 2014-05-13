@@ -1,0 +1,28 @@
+{
+	"name": "deferize",
+	"version": "0.0.0",
+	"author": "Julian Aubourg <j@ubourg.net> (http://jaubourg.net)",
+	"description": "transforms a callback-based function into a JQDeferred promise",
+	"main": "./lib/deferize.js",
+	"repository" : {
+		"type" : "git",
+		"url" : "http://github.com/jaubourg/deferize.git"
+	},
+	"dependencies": {
+		"JQDeferred": "*"
+	},
+	"devDependencies": {
+		"coveralls": "2.10.0",
+		"grunt": "0.4.5",
+		"grunt-contrib-jshint": "0.10.0",
+		"grunt-jscoverage": "0.1.0",
+		"grunt-jscs-checker": "0.4.3",
+		"grunt-shell": "0.7.0",
+		"load-grunt-tasks": "0.4.0",
+		"nodeunit": "0.9.0",
+		"wrench": "1.5.8"
+	},
+	"scripts": {
+		"test": "grunt"
+	}
+}
