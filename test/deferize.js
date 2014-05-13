@@ -9,6 +9,9 @@ var fs = require( "fs" );
 
 var stat = deferize( fs.stat );
 var exists = deferize.noerror( fs.exists );
+var divide = deferize.sync( function( a, b ) {
+	return a / b;
+} );
 
 function iThrow() {
 	throw "an exception";
@@ -58,6 +61,22 @@ module.exports = {
 	"<noerror> exception": function( __ ) {
 		__.expect( 1 );
 		deferize.noerror( iThrow )().fail( function( error ) {
+			__.strictEqual( error, "an exception", "exception caught" );
+		} ).always( function() {
+			__.done();
+		} );
+	},
+	"<sync> success": function( __ ) {
+		__.expect( 1 );
+		divide( 50, 5 ).done( function( result ) {
+			__.strictEqual( result, 10, "result is 10" );
+		} ).always( function() {
+			__.done();
+		} );
+	},
+	"<sync> exception": function( __ ) {
+		__.expect( 1 );
+		deferize.sync( iThrow )().fail( function( error ) {
 			__.strictEqual( error, "an exception", "exception caught" );
 		} ).always( function() {
 			__.done();

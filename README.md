@@ -36,7 +36,7 @@ open( "path/to/my/file", "r" ).done( function( fd ) {
 } );
 ```
 
-### No error argument
+### No Error Argument
 
 Sometimes a callback doesn't get an error as its first argument. In that case, you should call `deferize.noerror`:
 
@@ -52,6 +52,20 @@ exists( "path/to/my/file" ).done( function( flag ) {
 	// file does exist, flag === true
 } ).fail( function( flag ) {
 	// file does not exist, flag === false
+} );
+```
+
+### Synchronous Functions
+
+For those rare situations where you need to deferize a synchronous function, you can use `deferize.sync`:
+
+```javascript
+var divide = deferize.sync( function( a, b ) {
+	return a / b;
+} );
+
+divide( 50, 5 ).done( function( result ) {
+	result === 10; // true
 } );
 ```
 
