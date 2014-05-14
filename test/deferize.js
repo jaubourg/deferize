@@ -36,11 +36,12 @@ module.exports = {
 	},
 	exception: function( __ ) {
 		__.expect( 1 );
-		deferize( iThrow )().fail( function( error ) {
+		try {
+			deferize( iThrow )();
+		} catch ( error ) {
 			__.strictEqual( error, "an exception", "exception caught" );
-		} ).always( function() {
 			__.done();
-		} );
+		}
 	},
 	"<noerror> success": function( __ ) {
 		__.expect( 1 );
@@ -50,7 +51,7 @@ module.exports = {
 			__.done();
 		} );
 	},
-	"<noerror> error": function( __ ) {
+	"<noerror> false": function( __ ) {
 		__.expect( 1 );
 		exists( nonExistingFile ).fail( function( flag ) {
 			__.strictEqual( flag, false, "flag is false" );
@@ -60,11 +61,12 @@ module.exports = {
 	},
 	"<noerror> exception": function( __ ) {
 		__.expect( 1 );
-		deferize.noerror( iThrow )().fail( function( error ) {
+		try {
+			deferize.noerror( iThrow )();
+		} catch ( error ) {
 			__.strictEqual( error, "an exception", "exception caught" );
-		} ).always( function() {
 			__.done();
-		} );
+		}
 	},
 	"<sync> success": function( __ ) {
 		__.expect( 1 );
@@ -76,10 +78,11 @@ module.exports = {
 	},
 	"<sync> exception": function( __ ) {
 		__.expect( 1 );
-		deferize.sync( iThrow )().fail( function( error ) {
+		try {
+			deferize.sync( iThrow )();
+		} catch ( error ) {
 			__.strictEqual( error, "an exception", "exception caught" );
-		} ).always( function() {
 			__.done();
-		} );
+		}
 	}
 };

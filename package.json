@@ -1,6 +1,6 @@
 {
 	"name": "deferize",
-	"version": "0.1.0",
+	"version": "0.2.0-pre",
 	"author": "Julian Aubourg <j@ubourg.net> (http://jaubourg.net)",
 	"description": "transforms a callback-based function into a JQDeferred promise",
 	"main": "./lib/deferize.js",
