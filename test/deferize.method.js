@@ -31,22 +31,11 @@ AsyncArray.prototype = {
 			callback( value );
 		}, Math.floor( 3 * Math.random() ) );
 	} ),
-	lastValue: deferizeMethod.sync( function() {
-		return this._lastValue;
-	}, {
-		returnPromise: true
+	lastValue: deferizeMethod.getter( "_lastValue" ),
+	length: deferizeMethod.sync( function( callback ) {
+		callback( this._array.length );
 	} ),
-	lastValueIfNoError: deferizeMethod.sync( function() {
-		return this._lastValue;
-	}, {
-		rejection: false,
-		returnPromise: true
-	} ),
-	length: deferizeMethod.sync( function() {
-		return this._array.length;
-	}, {
-		returnPromise: true
-	} )
+	onError: deferizeMethod.fail()
 };
 
 module.exports = {
@@ -56,39 +45,33 @@ module.exports = {
 		asyncArray
 			.push( "a" )
 			.push( false )
-			.lastValueIfNoError().fail( function( reason ) {
+			.onError( function( reason ) {
 				__.strictEqual( reason, "no value", "proper reason for first error" );
-			} );
-		asyncArray
-			.lastValue().done( function( value ) {
+			} )
+			.lastValue( function( value ) {
 				__.strictEqual( value, "a", "proper first value" );
-			} );
-		asyncArray
+			} )
 			.push( "b" )
 			.push( "c" )
 			.push( "d" )
-			.lastValueIfNoError().fail( function( reason ) {
+			.onError( function( reason ) {
 				__.strictEqual( reason, "too long", "proper reason for second error" );
-			} );
-		asyncArray
-			.lastValue().done( function( value ) {
+			} )
+			.lastValue( function( value ) {
 				__.strictEqual( value, "c", "proper last value" );
-			} );
-		asyncArray
+			} )
 			.pop()
-			.length().done( function( length ) {
+			.length( function( length ) {
 				__.strictEqual( length, 2, "proper length after first pop" );
-			} );
-		asyncArray
+			} )
 			.pop()
 			.pop()
 			.pop()
-			.lastValueIfNoError().fail( function( value ) {
+			.onError( function( value ) {
 				__.strictEqual( arguments.length, 1, "noerror rejection passes arguments" );
 				__.strictEqual( value, undefined, "value that provoked rejection is undefined" );
-			} );
-		asyncArray
-			.lastValue().done( function( value ) {
+			} )
+			.lastValue( function( value ) {
 				__.strictEqual( value, "a", "last pop value is first push value" );
 				__.done();
 			} );
